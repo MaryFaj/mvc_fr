@@ -1,0 +1,23 @@
+{% include 'header.html' %}
+<div >
+    <ul>
+        {% for order in content_data.order %}
+        <li>ID: {{ order.id_order }}</li>
+        <li>Сумма {{ order.amount }}</li>
+        <li>Дата {{ order.datatime_create }}</li>
+        <li>Статус {{order.id_order_status}}
+        <form action="" method="get">
+        <input type="radio" name="id" value="1">новый<br>
+        <input type="radio" name="id" value="2">выполнен<br>
+        <input type="hidden" name= "id_order" value="{{ order.id_order }}">
+        <input type="submit" value="выбрать">
+        
+        </form>
+        </li>
+        <br><br>
+        {% endfor %}
+        
+        
+    </ul>
+    <p></p>
+</div>

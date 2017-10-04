@@ -1,0 +1,27 @@
+{% include 'header.html' %}
+<div >
+    <ul>
+        {% for good in content_data.good %}
+        <li>ID: {{ good.id_good }}</li>
+        <li>Наименование {{ good.name }}</li>
+        <li>Цена {{ good.price }}</li>
+        <li>Статус {{ good.status }}</li>
+        <br>
+        <form action="" method="get">
+        
+        <input type="hidden" name= "id_good" value="{{ good.id_good }}">
+        
+        <input type="submit" name= "{{ good.id_good }}" value="в корзину">
+        
+        </form>
+        
+        
+        {% endfor %}
+        
+        
+    </ul>
+    <p></p>
+</div>
+
+
+{% include 'footer.html' %}
