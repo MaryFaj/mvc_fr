@@ -1,8 +1,17 @@
 {% include 'header.html' %}
 <div >
-    <ul>
+    
         {% for order in content_data.order %}
-        <li>ID: {{ order.id_order }}</li>
+        <ul>
+        <li>ID: {{ order.id_order }}<ul>
+              <li>ID Good: {{order.id_good}}</li>
+              <li>Good: {{order.name}}</li>
+              <li>Quantity: {{order.is_in_order}}</li>
+         </ul> </li>
+       
+        
+        <li>User: {{order.user_name}}</li>
+        <li>E-mail: {{order.email}}</li>
         <li>Сумма {{ order.amount }}</li>
         <li>Дата {{ order.datatime_create }}</li>
         <li>Статус {{order.id_order_status}}
@@ -17,10 +26,14 @@
         </form>
         </li>
         <br><br>
+         </ul>
+         
+         
+       
         {% endfor %}
         
         
-    </ul>
+   
     <p></p>
 </div>
 <!--{{ order.id_order_status }}-->

@@ -8,7 +8,20 @@
     <body>
       <div><a href="/public/">Главная</a></div>
        <div><a href="/public/categories/">Каталог</a></div>
-       <div><a href="/public/order/">Заказы</a></div>
+       
+       
+        <div><a href="/public/cart/">Корзина</a></div>
+        
+        {% if content_data.id_user == 1 %}
+
+<div><a href="/public/order/">Заказы</a></div>
+
+
+{% else %}
+
+
+
+{% endif %}
         <!--<ul>
             {% for category in categories %}
             <li>

@@ -7,18 +7,17 @@ class OrderController extends Controller
 
     public function index($data)
     {
-        $order = OrderGood::getOrders(isset($data['id']) ? $data['id'] : 0);
+        session_start();
+        $order = OrderGood::getOrders();
         
         return ['order' => $order];
         
       }
      
-        
-    
 
-public function status($data){
+    public function status($data){
     
-    
+    session_start();
     if (!null==$_GET['id']){
         
     $set_status = OrderGood::setOrders($data);
@@ -27,7 +26,7 @@ public function status($data){
     
     $order = OrderGood::getOrders(isset($data['id']) ? $data['id'] : 0);
         
-        return ['order' => $order];
+        return ['order' => $order, 'id_user'=>$_SESSION['user']['id_user']];
     }
 }
 

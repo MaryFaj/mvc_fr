@@ -1,0 +1,57 @@
+{% include 'header.html' %}
+
+<div>
+
+
+    <h2>{{content_data.message}}</h2>
+    
+     {% if content_data.cart_goods == 0 %}
+     <div></div>
+     
+    {% else %}
+    
+{% for cart_good in content_data.cart_goods %}
+ <form action="" method="get">
+        
+        <table>
+            <tr>
+                <td>{{cart_good.name}}| </td>
+                
+                <td>цена: {{cart_good.price}}</td>
+              
+               <td>количество: <input type="text" name="quantity[{{cart_good.id_good}}]" value="{{cart_good.q}}"  size="2">
+               <input type="hidden" name="id[]" value="{{cart_good.id_good}}"></td>
+                 <td>стоимость: {{cart_good.res}} </td>
+            </tr>
+        </table>
+          
+       {% endfor %}
+       
+ <p>Общая сумма заказа: {{content_data.sum}}</p>
+        
+ <input type="submit" value="Обновить заказ" name="update">
+ <input type="submit" value="Удалить заказ" name="del">
+   
+    </form>
+
+<form action="/public/cart/issue/">
+    
+    <input type="submit" value="Оформить заказ" name="issue">
+</form>
+ {% endif %}   
+
+        
+     
+
+
+
+
+
+
+
+
+
+</div>
+
+
+{% include 'footer.html' %}
