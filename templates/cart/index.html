@@ -1,56 +1,106 @@
 {% include 'header.html' %}
 
-<div>
+<div class="products-breadcrumb">
+    <div class="container">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Главная</a><span>|</span></li>
+            <li>Корзина</li>
+        </ul>
+    </div>
+</div>
+<div class="banner">
+    <div class="w3l_banner_nav_left">
+        <nav class="navbar nav_bottom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav nav_1">
 
+                    {% for subcategory in content_data.subcategories %}
 
-    <h2>{{content_data.message}}</h2>
-    
-     {% if content_data.cart_goods == 0 %}
-     <div></div>
-     
-    {% else %}
-    
-{% for cart_good in content_data.cart_goods %}
- <form action="" method="get">
-        
-        <table>
-            <tr>
-                <td>{{cart_good.name}}| </td>
-                
-                <td>цена: {{cart_good.price}}</td>
-              
-               <td>количество: <input type="text" name="quantity[{{cart_good.id_good}}]" value="{{cart_good.q}}"  size="2">
-               <input type="hidden" name="id[]" value="{{cart_good.id_good}}"></td>
-                 <td>стоимость: {{cart_good.res}} </td>
-            </tr>
-        </table>
-          
-       {% endfor %}
-       
- <p>Общая сумма заказа: {{content_data.sum}}</p>
-        
- <input type="submit" value="Обновить заказ" name="update">
- <input type="submit" value="Удалить заказ" name="del">
-   
-    </form>
+                    <li><a href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                    {% endfor %}
+                </ul>
 
-<form action="/public/cart/issue/">
-    
-    <input type="submit" value="Оформить заказ" name="issue">
-</form>
- {% endif %}   
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </div>
 
-        
-     
+    <div class="w3l_banner_nav_right">
 
+        <h2>{{content_data.message_empty}}</h2>
+        <div class="privacy about">
+            <h3>{{content_data.message}}</h3>
+            {% if content_data.status==2 %}
+            <h5>Чтобы оформить заказ, <a href="/user/" class="link_custom_style">войдите на сайт</a></h5>
+            {% elseif content_data.status==1 %}
+            <h4>Ваш заказ принят!</h4>
+            {% endif %} {% if content_data.cart_goods == 0 %} {% else %}
 
+            <form action="" method="post">
+                <table class="timetable_sub">
+                    <tr>
+                        <th>Наименование</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Стоимость</th>
+                    </tr>
+                    {% for cart_good in content_data.cart_goods %}
+                    <tr>
+                        <td>{{cart_good.name}}</td>
+                        <td><input style="display: block; width: 50px;" type="number" min="0" max="100" size="2" name="quantity[{{cart_good.id_good}}]" value="{{cart_good.q}}">
+                            <input type="hidden" size="2" name="id[]" value="{{cart_good.id_good}}"></td>
+                        <td>{{cart_good.price}}&#8381;</td> {% if content_data.view_coast == true %}
+                        <td>{{cart_good.res}}&#8381; </td>
+                        {% else %} {% endif %} {% endfor %}
+                    </tr>
+                    {% if content_data.view_coast == true %}
+                    <tr>
+                        <td colspan="3"></td>
+                        <td style="text-align:center"><b>ИТОГО:</b> {{content_data.sum}}&#8381; </td>
+                    </tr>
+                    {% else %} {% endif %}
+                    <!-- Задаем количество ячеек по горизонтали для объединения -->
 
+                </table>
 
+                <input type="submit" value="Рассчитать стоимомть" name="update" class="cart_submit shadow_button">
+                <input type="submit" value="Удалить заказ" name="del" class="cart_submit shadow_button">
 
+            </form>
 
+            <form action="" method="post">
 
+                {% if content_data.view_coast == true and content_data.id_user %}
+                <p style="margin: 20px 0 10px 15px; color: grey;"><img src="/images/delivery_25.png"> <span>Адрес доставки:</span></p>
+                <textarea name="delivery" rows="5" cols="22" required></textarea>
+                <p style="margin: 20px 0 10px 15px; color: grey;"> <span>Комментарии:</span></p>
+                <textarea name="comment" rows="5" cols="22"></textarea>
 
+                <input type="submit" value="Оформить заказ" name="issue" class="cart_submit shadow_button" style="margin-top:10px;"> {% elseif content_data.view_coast == true and content_data.id_user == false %}
 
+                <h5 style="margin-top: 20px;">Чтобы оформить заказ, <a href="/user/" class="link_custom_style">войдите на сайт</a></h5>
+
+                {% else %} {% endif %}
+
+            </form>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
 </div>
 
 

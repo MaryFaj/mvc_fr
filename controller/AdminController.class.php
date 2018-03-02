@@ -1,99 +1,51 @@
 <?php
-class AdminController extends Controller
-{
-    
-    protected $controls = [
-        'pages' => 'Page',
-        'orders' => 'Order',
-        'categories' => 'Category',
-        'goods' => 'Good'
-    ];
 
-    public $title = 'admin';
-    
-    public function index($data)
-    {
-        return ['controls' => $this->controls];
+class AdminController extends Controller {
+
+    public $title;
+
+    function __construct() {
+        parent::__construct();
+        $this->title .= ' | Администратор';
     }
 
-    public function control($data)
-    {
-        // Сохранение
-        $actionId = $this->getActionId($data);
-        if ($actionId['action'] === 'save') {
-            $fields = [];
-            foreach ($_POST as $key => $value) {
-                $field = explode('_', $key, 2);
-                if ($field[0] == $actionId['id']) {
-                    $fields[$field[1]] = $value;
+    public $view = 'admin';
 
+    public function index($data) {
+        session_start();
+
+        // проверка id администратора
+        if ($_SESSION['user']['id_user'] == '4') {
+
+            // обработка изменения email администратора
+            if (null != $_POST['change_email']) {
+                if (AdminFunction::changeAdminEmail()) {
+                    $status = "Email успешно изменен";
+                } else {
+                    $status = "Ошибка. Попробуйте еще раз";
                 }
             }
-        }
-
-        if ($actionId['action'] === 'create') {
-            $fields = [];
-            foreach ($_POST as $key => $value) {
-                if (substr($key, 0, 4) == 'new_') {
-                    $fields[str_replace('new_', '', $key)] = $value;
+            // обработка удаления неактивированных пользователей
+            if (null != $_POST['del_not_active']) {
+                if (UserFunction::deleteNotActive()) {
+                    $status = "Неактивированные пользователи удалены";
+                } else {
+                    $status = "Ошибка. Попробуйте еще раз";
                 }
             }
-        }
+            // работа корзины
+            $cart = CartFunction::getCart($data);
+            // получение всех категорий для отображения их в форме создания новой категории и нового товара
+            $categories = Category::getCategories();
+            // создание нового товара
+            $admin_create_good = AdminFunction::createGood();
+            // создание новой категории
+            $admin_create_category = AdminFunction::createCategory();
 
-        switch($actionId['action']) {
-            case 'create':
-                $query = 'INSERT INTO ' . $data['id'] . ' ';
-                $keys = [];
-                $values = [];
-                foreach ($fields as $key => $value) {
-                    $keys[] = $key;
-                    $values[] = '"' . $value . '"';
-                }
-
-                $query .= ' (' . implode(',', $keys) . ') VALUES ( ' . implode(',', $values) . ')';
-                db::getInstance()->Query($query);
-                break;
-            case 'save':
-                $query = 'UPDATE ' . $data['id'] . ' SET ';
-                ;
-                foreach ($fields as $field => $value) {
-                    $query .= $field . ' = "' . $value . '",';
-                }
-                $query = substr($query, 0, -1) . ' WHERE id = :id';
-                db::getInstance()->Query($query, ['id' => $actionId['id']]);
-                break;
-            case 'delete':
-                db::getInstance()->Query('UPDATE ' . $data['id'] . ' SET status=:status WHERE id = :id', ['id' => $actionId['id'], 'status' => Status::Deleted]);
-                break;
+            return ['status' => $status, 'is_admin' => true, 'error_good' => $admin_create_good['error'], 'error_category' => $admin_create_category['error'], 'message' => $cart['msg'], 'cart_goods' => $cart['cart'], 'subcategories' => $categories, 'sum' => $cart['summa'], 'view_coast' => $cart['coast'], 'id_user' => $_SESSION['user']['id_user'], 'user_name' => $_SESSION['user']['user_name']];
+        } else {
+            return['restrict' => 'Страница администратора', 'is_admin' => false];
         }
-        $fields = db::getInstance()->Select('desc ' . $data['id']);
-        $_items = db::getInstance()->Select('select * from ' . $data['id']);
-        $items = [];
-        foreach ($_items as $item) {
-            $items[] = new $this->controls[$data['id']]($item);
-        }
-
-        return ['fields' => $fields, 'items' => $items];
     }
 
-    protected function getActionId($data)
-    {
-        foreach ($_POST as $key => $value) {
-            if (strpos($key, '__save_') === 0) {
-                $id = explode('__save_', $key)[1];
-                $action = 'save';
-                break;
-            }
-            if (strpos($key, '__delete_') === 0) {
-                $id = explode('__delete_', $key)[1];
-                $action = 'delete';
-                break;
-            }
-            if (strpos($key, '__create') === 0) {
-                $action = 'create';
-                $id = 0;
-            }
-        }
-        return ['id' => $id, 'action' => $action];
-    }
 }

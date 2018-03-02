@@ -1,34 +1,209 @@
 {% include 'header.html' %}
-<br>
-<div>
-    <h1>Добро пожаловать!</h1>
+<div class="banner">
+    <div class="w3l_banner_nav_left">
+        <nav class="navbar nav_bottom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav nav_1">
+                    {% for subcategory in content_data.subcategories %}
+                    <li><a href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    </div>
 </div>
+<div id="goods-data"></div>
+<!--{{ content_data.msg_auth_success }}-->
+<div class="w3l_banner_nav_right">
+    <section class="slider">
+        <div class="flexslider">
+            <ul class="slides">
+                <li>
+                    <div class="w3l_banner_nav_right_banner">
+                        <h3>Разнообразь<span>Вкус</span> Специями</h3>
+                        <div class="more">
+                            <a href="/categories/12/" class="button--saqui button--round-l button--text-thick" data-text="Купить">Купить</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="w3l_banner_nav_right_banner1">
+                        <h3>Готовь блюда<span>со Свежими</span> Овощами</h3>
+                        <div class="more">
+                            <a href="/categories/3/" class="button--saqui button--round-l button--text-thick" data-text="Купить">Купить</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="w3l_banner_nav_right_banner2">
+                        <h3>Скидки <i>25%</i>На соки </h3>
+                        <div class="more">
+                            <a href="/categories/8/" class="button--saqui button--round-l button--text-thick" data-text="Купить">Купить</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- flexSlider -->
+    <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" property="" />
+    <script defer src="/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+        $(window).load(function() {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function(slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
 
-
-
-<div>
-    <form action="" method="post">
-       
-        {% if content_data.user_name == null %}
-        <div><a href="/public/user/">Регистрация</a></div>
-
-
-        <p>Логин</p>
-        <input type="text" name="login_user">
-        <p>Пароль</p>
-        <input type="password" name="pass">
-        <p>
-            <input type="submit" value="Войти"> {% else %}
-            <i>Приветствуем Вас, {{content_data.user_name}}!</i><br> {% endif %}
-            <input type="submit" value="Выйти" name="exit">
-        </p>
-
-    </form>
-
+    </script>
+    <!-- //flexSlider -->
 </div>
-<div>
-
-   
-
+<div class="clearfix"></div>
+<!-- banner -->
+<div class="banner_bottom">
+    <div class="wthree_banner_bottom_left_grid_sub">
+    </div>
+    <div class="wthree_banner_bottom_left_grid_sub1">
+        <div class="col-md-4 wthree_banner_bottom_left">
+            <a href="/categories/3/" style="display:block;">
+                <div class="wthree_banner_bottom_left_grid">
+                    <img src="/images/4.jpg" alt=" " class="img-responsive" />
+                    <div class="wthree_banner_bottom_left_grid_pos">
+                        <h4>Скидка на новики<span>25%</span></h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 wthree_banner_bottom_left">
+            <a href="/categories/12/" style="display:block;">
+                <div class="wthree_banner_bottom_left_grid">
+                    <img src="/images/5.jpg" alt=" " class="img-responsive" />
+                    <div class="wthree_banner_btm_pos">
+                        <h3>Товары <span>высокого</span> <i> качества</i></h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 wthree_banner_bottom_left">
+            <a href="/categories/8/" style="display:block;">
+                <div class="wthree_banner_bottom_left_grid">
+                    <img src="/images/6.jpg" alt=" " class="img-responsive" />
+                    <div class="wthree_banner_btm_pos1">
+                        <h3> <span>Акция</span> -25%</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+    <div class="clearfix"> </div>
 </div>
+<!-- top-brands -->
+
+<!-- fresh-vegetables -->
+<div class="fresh-vegetables">
+    <div class="container">
+
+        <div class="w3l_fresh_vegetables_grids">
+            <div class="col-md-3 w3l_fresh_vegetables_grid w3l_fresh_vegetables_grid_left">
+                <div class="w3l_fresh_vegetables_grid1">
+                    <div class="w3l_fresh_vegetables_grid1">
+                        <a href="/categories/11/"><img src="/images/xleb.jpg" alt=" " class="img-responsive" /></a>
+                    </div>
+                    <div class="w3l_fresh_vegetables_grid1_bottom">
+                        <a href="/categories/12/"><img src="/images/spicies.jpg" alt=" " class="img-responsive" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 w3l_fresh_vegetables_grid_right">
+                <div class="col-md-4 w3l_fresh_vegetables_grid">
+                    <div class="w3l_fresh_vegetables_grid1">
+                        <a href="/categories/special/"><img src="/images/8.jpg" alt=" " class="img-responsive" /></a>
+                    </div>
+                </div>
+                <div class="col-md-4 w3l_fresh_vegetables_grid">
+                    <div class="w3l_fresh_vegetables_grid1">
+                        <div class="w3l_fresh_vegetables_grid1_rel">
+                            <img src="images/7.jpg" alt=" " class="img-responsive" />
+                            <div class="w3l_fresh_vegetables_grid1_rel_pos">
+                                <div class="more m1">
+                                    <a href="/categories/3/" class="button--saqui button--round-l button--text-thick" data-text="Начать покупки">Начать покупки!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3l_fresh_vegetables_grid1_bottom">
+                        <img src="/images/10.jpg" alt=" " class="img-responsive" />
+                        <div class="w3l_fresh_vegetables_grid1_bottom_pos">
+                            <h5><a href="/categories/special/" class="link_special">Акция! -25%</a></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 w3l_fresh_vegetables_grid">
+                    <div class="w3l_fresh_vegetables_grid1">
+                        <a href="/categories/8/"><img src="/images/soft_drinks.jpg" alt=" " class="img-responsive" /></a>
+                    </div>
+                    <div class="w3l_fresh_vegetables_grid1_bottom">
+                        <a href="/categories/3/"><img src="/images/11.jpg" alt=" " class="img-responsive" /></a>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+                <div class="agileinfo_move_text">
+                    <div class="agileinfo_marquee">
+                        <h4><a href="/categories/special/" class="link_special_h4">Скидка  <span class="blink_me"> 25%</span></a></h4>
+                    </div>
+                    <div class="agileinfo_breaking_news">
+                        <a href="/categories/special/"> <span> </span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!-- //fresh-vegetables -->
+<!-- newsletter -->
+<div class="newsletter">
+    <div class="container">
+        <div class="w3agile_newsletter_left">
+            <h3>подписаться на прайс-рассылку</h3>
+            {% if content_data.is_email==true %}
+            <h4>{{content_data.status_subscribe}}</h4>
+            {% else %} {% endif %}
+        </div>
+        <div class="w3agile_newsletter_right">
+            <form action="" method="post">
+                <p><input type="email" name="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required=""></p>
+                <p><input type="button" name="subscribe_captcha" value="Подписаться!" onclick="$('#subscribe_captcha').css('display', 'block' ); $(this).css('display', 'none');">
+                    <p>
+
+                        <div id="subscribe_captcha" style="display: none;">
+
+                            <p style="margin-bottom: 15px;"><img src="/kcaptcha/index_kcaptcha.php" onclick="this.src = '/kcaptcha/index_kcaptcha.php?' + Math.random();"></p>
+                            <input type="text" name="keystring_subscribe" value="Введите символы с картинки" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Введите символы с картинки';}" required=" ">
+                            <input type="submit" name="subscribe" value="Подписаться!">
+
+                        </div>
+
+            </form>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!-- //newsletter -->
+
 {% include 'footer.html' %}

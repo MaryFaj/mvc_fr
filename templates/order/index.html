@@ -1,41 +1,41 @@
-{% include 'header.html' %}
-<div >
-    
-        {% for order in content_data.order %}
-        <ul>
-        <li>ID: {{ order.id_order }}<ul>
-              <li>ID Good: {{order.id_good}}</li>
-              <li>Good: {{order.name}}</li>
-              <li>Quantity: {{order.is_in_order}}</li>
-         </ul> </li>
-       
-        
-        <li>User: {{order.user_name}}</li>
-        <li>E-mail: {{order.email}}</li>
-        <li>Сумма {{ order.amount }}</li>
-        <li>Дата {{ order.datatime_create }}</li>
-        <li>Статус {{order.id_order_status}}
-        
-        <form action="/public/order/status/" method="get">
-        <input type="radio" name="id" value="1">новый<br>
-        <input type="radio" name="id" value="2">выполнен<br>
-        <input type="hidden" name= "id_order" value="{{ order.id_order }}">
-        
-        <input type="submit" value="выбрать">
-        
-        </form>
-        </li>
-        <br><br>
-         </ul>
-         
-         
-       
-        {% endfor %}
-        
-        
-   
-    <p></p>
-</div>
-<!--{{ order.id_order_status }}-->
+{% include 'header.html' %} {% if content_data.id_user == 4 %}
 
+<table class="orders_table">
+
+    <tr>
+        <th>Заказ №</th>
+        <th>Пользователь</th>
+        <th>e-mail</th>
+        <th>телефон</th>
+        <th>сумма</th>
+        <th>адрес</th>
+        <th>дата</th>
+        <th>статус</th>
+        <th>изменить статус</th>
+    </tr>
+    <tr> {% for order in content_data.order %}
+        <td><a href="/order/detail/{{ order.id_order }}/">{{ order.id_order }}</a></td>
+        <td>{{order.user_name}}</td>
+        <td>{{order.email}}</td>
+        <td>{{order.phone}}</td>
+        <td>{{ order.amount }}</td>
+        <td>{{ order.address }}</td>
+        <td>{{ order.datatime_create }}</td>
+        <td>{{order.order_status_name}}</td>
+        <td>
+            <form action="/order/" method="post" class="orders_update_form">
+
+                <label><input type="radio" name="id_status" value="1"> новый</label><br>
+                <label><input type="radio" name="id_status" value="2"> выполнен</label><br>
+                <label><input type="radio" name="id_status" value="3"> принят</label><br>
+                <label><input type="radio" name="id_status" value="4"> удалить</label><br>
+                <label><input type="hidden" name= "id_order" value="{{ order.id_order }}"></label>
+
+                <input type="submit" value="выбрать">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %} {{content_data.message}} {% endif %} 
 {% include 'footer.html' %}

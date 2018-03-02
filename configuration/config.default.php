@@ -1,4 +1,5 @@
 <?php
+
 $config['db_user'] = 'root';
 $config['db_password'] = '';
 $config['db_base'] = 'shop';
@@ -6,7 +7,7 @@ $config['db_host'] = 'localhost';
 $config['db_charset'] = 'UTF-8';
 
 $config['path_root'] = __DIR__;
-$config['path_public'] = $config['path_root'] . '/../public';
+$config['path_public'] = $config['path_root'] . '/../public_html';
 $config['path_model'] = $config['path_root'] . '/../model';
 $config['path_controller'] = $config['path_root'] . '/../controller';
 $config['path_cache'] = $config['path_root'] . '/../cache';
@@ -20,8 +21,3 @@ $config['path_templates'] = $config['path_root'] . '/../templates';
 $config['path_logs'] = $config['path_root'] . '/../logs';
 
 $config['sitename'] = 'Интернет-магазин';
-define('DB_DRIVER','mysql');
-define('DB_HOST','localhost');
-define('DB_NAME','catalog');
-define('DB_USER','root');
-define('DB_PASS','');

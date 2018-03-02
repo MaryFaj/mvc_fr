@@ -5,9 +5,13 @@ try{
     App::init();
 }
 catch (PDOException $e){
+	Logger::Write($e);
     echo "DB is not available";
-    var_dump($e->getTrace());
+    //var_dump($e->getTrace());
 }
 catch (Exception $e){
-    echo $e->getMessage();
+	Logger::Write($e);
+    //echo $e->getMessage();
+	echo "Error";
 }
+

@@ -1,2 +1,135 @@
-    </body>
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <!--<div class="col-md-3 w3_footer_grid">
+				<div class="w3_footer_grid_bottom">
+				
+						<h4>100% безопасная оплата</h4>
+						<img src="/images/card.png" alt=" " class="img-responsive" />
+
+					</div>
+					<div class="w3_footer_grid_bottom" style="margin-top:100%;">
+						
+					</div>
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+			<h3>Информация</h3>
+				<ul class="w3_footer_grid_list">
+					<li><a href="/index/contacts/">Контакты</a></li>
+					<li><a href="public_html/index/about/">О нас</a></li>
+					<li><a href="public_html/categories/special/">Акция</a></li>
+					<li><a href="public_html/index/service/">Сервис</a></li>					
+				</ul>
+				
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>Каталог</h3>
+				<ul class="w3_footer_grid_list">
+				 {% for subcategory in content_data.subcategories %}
+                  <li><a class="category" href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                  {% endfor %}
+					
+				</ul>
+			</div>
+			<div class="col-md-3 w3_footer_grid">
+				<h3>Твиттер</h3>
+				<ul class="w3_footer_grid_list1">
+					<li><label class="fa fa-twitter" aria-hidden="true"></label><i>01 день назад</i><span>Non numquam <a href="#">http://sd.ds/13jklf#</a>
+						eius modi tempora incidunt ut labore et
+						<a href="#">http://sd.ds/1389kjklf#</a>quo nulla.</span></li>
+					<li><label class="fa fa-twitter" aria-hidden="true"></label><i>02 дня назад</i><span>Con numquam <a href="#">http://fd.uf/56hfg#</a>
+						eius modi tempora incidunt ut labore et
+						<a href="#">http://fd.uf/56hfg#</a>quo nulla.</span></li>
+				</ul>
+			</div>-->
+        <div class="clearfix"> </div>
+        <div class="agile_footer_grids">
+            <div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+                <div class="w3_footer_grid_bottom">
+                    <h4 class="footer_h4">100% безопасная оплата</h4>
+                    <img src="/images/card.png" alt=" " class="img-responsive" />
+                </div>
+            </div>
+            <div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+                <div class="w3_footer_grid_bottom" style="color: #999; font-size:1em;">
+                    <div class="footer_h4">г. Иркутск, мкр.Университетеский, 56</div>
+                    <div>Телефон: (+123) 233 2362 826 </div>
+                    <div>E-mail <span><a class="white_link" href="mailto:info@example.com">info@example.com</a></span></div>
+
+                </div>
+
+            </div>
+            <div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+                <div class="w3_footer_grid_bottom ">
+
+                    <h5 class="footer_h4">Мы в соцсетях</h5>
+                    <ul class="agileits_social_icons">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-md-3 w3_footer_grid agile_footer_grids_w3_footer">
+                <div class="w3_footer_grid_bottom">
+                    <h4 style="color:white;" class="footer_h4">Информация</h4>
+                    <ul class="info_footer">
+                        <li><a class="footer_link_list" href="/index/contacts/">Контакты</a></li>
+                        <li><a class="footer_link_list" href="public_html/index/about/">О нас</a></li>
+                        <li><a class="footer_link_list" href="public_html/categories/special/">Акция</a></li>
+                        <li><a class="footer_link_list" href="public_html/index/service/">Сервис</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="wthree_footer_copy">
+            <p>© 2018 Дизайн на основе шаблона <b>Grocery Store</b> студии <a href="http://w3layouts.com/">W3layouts</a>. Разработка сайта <b style="color:white;">m-fatj@rambler.ru</b> </p>
+        </div>
+    </div>
+</div>
+<!-- //footer -->
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+<script>
+    /*$(document).ready(function(){
+        $(".dropdown").hover(            
+            function() {
+                $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+                $(this).toggleClass('open');        
+            },
+            function() {
+                $('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+                $(this).toggleClass('open');       
+            }
+        );
+    });*/
+
+</script>
+<!-- here stars scrolling icon -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        /*
+        	var defaults = {
+        	containerID: 'toTop', // fading element id
+        	containerHoverID: 'toTopHover', // fading element hover id
+        	scrollSpeed: 1200,
+        	easingType: 'linear' 
+        	};
+        */
+
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+
+    });
+
+</script>
+<!-- //here ends scrolling icon -->
+
+</body>
+
 </html>

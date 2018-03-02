@@ -1,25 +1,138 @@
 {% include 'header.html' %}
-<br>
-<div>
-    <h1>Заполните форму регистрации</h1>
-</div>
-<div>
-  
-   <form action="" method="post">
- <p>Логин</p>
- <input type="text" name="login">
-  <p>Ваше имя</p>
-   <input type="text" name="user_name" required>
-   <p>Пароль</p>
-   <input type="password" name="password" required>
-   <p>E-mail</p>
-   <input type="text" name="email" required>
-   <p><input type="submit" value="Отправить"></p>
-</form>
+<div class="products-breadcrumb">
+    <div class="container">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Главная</a><span>|</span></li>
 
+            <li>Регистрация<span></span></li>
+
+        </ul>
+    </div>
 </div>
-<div>
-    
-    
+<div class="banner">
+    <div class="w3l_banner_nav_left">
+        <nav class="navbar nav_bottom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav nav_1">
+
+                    {% for subcategory in content_data.subcategories %}
+
+                    <li><a href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </div>
+    <div class="w3l_banner_nav_right">
+        {% if content_data.status_msg and content_data.user_name == null %}
+        <div style=" 
+    margin: 70px 30px 30px 30px;
+    color: grey;
+    width: 40%;
+    padding: 15px;
+    font-weight: 500;
+	box-shadow: 0 5px 5px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);">{{ content_data.status_msg }}</div>
+
+        {% else %} {% endif %} {% if content_data.auth_status %}
+        <div style=" 
+    margin: 70px 30px 30px 30px;
+    color: grey;
+    width: 40%;
+    padding: 15px;
+    font-weight: 500;
+	box-shadow: 0 5px 5px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);">{{ content_data.auth_status }}</div>
+        {% else %} {% endif %}
+        <!-- login -->
+        <div class="w3_login">
+            <h3>Регистрация & Вход</h3>
+            <div class="w3_login_module">
+                <div class="module form-module">
+                    <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+                        <div class="tooltip">КЛИКНИ!</div>
+                    </div>
+                    <!--<p>{{content_data.capcha_msg}}</p>-->
+                    {% if content_data.user_name == null %}
+                    <div class="form">
+
+                        <h2>Зарегистрироваться</h2>
+
+                        <form action="" method="post">
+                            <input type="text" name="login" placeholder="Логин" required=" ">
+                            <input type="text" name="user_name" placeholder="Имя" required=" ">
+
+                            <input type="email" name="email" placeholder="Email" required=" ">
+                            <input type="text" name="phone" placeholder="Телефон" required=" ">
+                            <input type="password" name="password" placeholder="Пароль" required=" ">
+                            <p style="color: grey; margin-bottom: 10px; ">Введите символы с картинки:</p>
+                            <p style="margin-bottom: 10px;"><img src="/kcaptcha/index_kcaptcha.php" onclick="this.src = '/kcaptcha/index_kcaptcha.php?' + Math.random();"></p>
+                            <input type="text" name="keystring_registration" class="input_auth_header" required=" ">
+                            <input type="submit" value="Отправить">
+                        </form>
+                    </div>
+
+                    <div class="form">
+
+                        <h2>Вход</h2>
+                        <form action="" method="post">
+
+                            <input type="text" name="login_user" placeholder="логин" class="input_auth_header" required=" ">
+                            <input type="password" name="pass" placeholder="пароль" class="input_auth_header" required=" ">
+                            <p style="color: grey; margin-bottom: 10px; ">Введите символы с картинки:</p>
+                            <p style="margin-bottom: 10px;"><img src="/kcaptcha/index_kcaptcha.php" onclick="this.src = '/kcaptcha/index_kcaptcha.php?' + Math.random();"></p>
+                            <input type="text" name="keystring_enter" class="input_auth_header" required=" ">
+                            <p> <input type="submit" value="Войти" class="cart_submit"></p>
+                        </form>
+                        <!--<div class="cta"><a href="#">Forgot your password?</a></div>-->
+                    </div>
+                    {% else %}
+
+                    <div class="form">
+                        <form action="" method="post">
+                            <h2><i>Вы зарегистрированы, {{content_data.user_name}}!</i></h2>
+                        </form>
+                    </div>
+
+                    <div class="form">
+                        <form action="" method="post">
+                            <h2><i>Приветствуем Вас, {{content_data.user_name}}!</i></h2>
+                            <p><input type="submit" value="Выйти" name='exit'></p>
+                        </form>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $('.toggle').click(function() {
+                // Switches the Icon
+                $(this).children('i').toggleClass('fa-pencil');
+                // Switches the forms  
+                $('.form').animate({
+                    height: "toggle",
+                    'padding-top': 'toggle',
+                    'padding-bottom': 'toggle',
+                    opacity: "toggle"
+                }, "slow");
+            });
+
+        </script>
+    </div>
+    <!-- //login -->
+    <div class="clearfix"></div>
+    <!-- //banner -->
 </div>
+
 {% include 'footer.html' %}

@@ -1,10 +1,10 @@
 <?php
 
 class Order extends Model {
+
     protected static $table = 'orders';
 
-    protected static function setProperties()
-    {
+    protected static function setProperties() {
         self::$properties['phone'] = [
             'type' => 'varchar',
             'size' => 512
@@ -19,4 +19,5 @@ class Order extends Model {
             'type' => 'float'
         ];
     }
+
 }

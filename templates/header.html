@@ -1,34 +1,263 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-    <script type="text/javascript" src="js/category.js"></script>
-    <body>
-      <div><a href="/public/">Главная</a></div>
-       <div><a href="/public/categories/">Каталог</a></div>
-       
-       
-        <div><a href="/public/cart/">Корзина</a></div>
-        
-        {% if content_data.id_user == 1 %}
 
-<div><a href="/public/order/">Заказы</a></div>
+<head>
+    <title>{{ title }}</title>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- //for-mobile-apps -->
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- font-awesome icons -->
+    <link href="/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- //font-awesome icons -->
+    <!-- js -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <!--<script src="/js/fullajax.min.js"></script>-->
+    <!-- //js -->
+    <link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="/js/move-top.js"></script>
+    <script type="text/javascript" src="/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            $(".scroll").click(function(event) {
+                event.preventDefault();
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
 
+            $("#cart_trigger_1").click(function() {
+                $("#cart_box_1").toggle("normal");
+            });
 
-{% else %}
+            $("#cart_trigger_2").click(function() {
+                $("#cart_box_1").toggle("normal");
+            });
 
+            $("#auth_link_header").click(function() {
+                $("#auth_menu").toggle("normal");
+            });
 
+            $.ajaxPrefilter(function(options, original_Options, jqXHR) {
+                options.async = true;
+            });
 
-{% endif %}
-        <!--<ul>
-            {% for category in categories %}
-            <li>
-                <a href="/public/categories/{{ category.id_category }}/" link="{{ category.id_category }}" class="category-link">{{ category.name }}</a>
-            </li>
-            {% endfor %}
-        </ul>-->
+            $(".category").on('click', function(event) {
 
-<!--/categories/?id={{ category.id_category }}-->
+                event.preventDefault();
 
+                var url = $(this).attr("href");
+
+                // добавляем адресс к которому сделан аякс-запрос в историю браузера
+                history.pushState({
+                    url: url
+                }, null, url);
+                var url_id = url.slice(12, -1);
+                //console.log("uh!");
+
+                getCategory(url_id);
+
+                //Работа кнопок вперед\назад в браузере
+                $(window).bind('popstate', function(event) {
+                    getCategory(location.pathname.slice(24, -1));
+                    console.log(location.pathname.slice(24, -1));
+
+                });
+
+                function getCategory(url_id) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/categories/ajax/",
+                        cache: false,
+                        data: {
+                            "id": url_id
+                        },
+
+                        success: function(url_data) {
+                            $('#goods-data').html(url_data);
+
+                        }
+                    });
+                }
+            });
+            
+            function update_ajax() {
+                $('.cart_table input').on('click', function() {
+                    var update_this = $('#form_cart_ajax').serialize();
+                    //console.log(update_this);
+                    $.ajax({
+                        type: "POST",
+                        url: "/cart/ajax_cart/",
+                        cache: false,
+                        data: update_this,
+                        success: function(add) {
+                            $('#cart_header').html(add);
+                        }
+                    });
+                });
+            };
+
+            update_ajax();
+
+            $(".button_ajax").on('click', function() {
+                var add = $(this).attr("value");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/cart/ajax_cart/",
+                    cache: false,
+                    data: {
+                        "id_good": add
+                    },
+                    success: function(add) {
+                        $('#cart_header').html(add);
+                    }
+                });
+            });
+
+            /*$("#auth_ajax").on('click', function() {
+                var data_auth = $('#auth_form_ajax').serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/user/ajaxAuth/",
+                    cache: false,
+                    data: data_auth,
+                    success: function(add) {
+                        $('#auth_menu').html(add);
+                    }
+                });
+            });
+			 $("#exit_ajax").on('click', function() {
+                //var data_auth = $('#auth_form_ajax').serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/user/ajaxAuth/",
+                    cache: false,
+                    data: {"exit": 1},
+                    success: function(add) {
+                        $('#auth_menu').html(add);
+                    }
+                });
+            });*/
+            
+            
+        });
+
+    </script>
+    
+</head>
+
+<body>
+    <!-- header -->
+    <div id="header">
+        <div class="agileits_header">
+            <div class="w3l_offers">
+                <a href="/categories/special/">Акция !</a>
+            </div>
+            <div class="w3l_search">
+                <form action="/search/" method="post">
+                    <input type="text" placeholder="Найти товар..." name="query">
+                    <input type="submit" value=" ">
+                </form>
+            </div>
+
+            <div class="product_list_header">
+                <button class="product_list_header_cart" id="cart_trigger_1">Ваша корзина</button>
+            </div>
+            <div id="cart_box_1">
+                {% include 'cart_header.html' %}
+                <button id="cart_trigger_2"> </button>
+            </div>
+            <div class="w3l_header_right">
+                <ul>
+                    <li class="dropdown profile_details_drop">
+                        <button id="auth_link_header"><i class="fa fa-user" style= "filter: invert(100%);"></i><span class="caret" style=" filter: invert(100%);"></span></button>
+                        <div class="mega-dropdown-menu">
+                            <div class="w3ls_vegetables">
+                                <div id="auth_menu">
+								
+								{% include '/user/ajaxAuth.html' %}
+                                    <!--<form action="" method="post" id="auth_form_ajax">
+                                        {% if content_data.user_name == null %}
+                                        <input type="text" name="login_user" placeholder="логин" size="12" class="input_auth_header" required=" ">
+                                        <input type="password" name="pass" placeholder="пароль" size="12" class="input_auth_header" required=" ">
+                                        <p style="margin: 10px; color: grey; width: 190px;">Введите символы с картинки:</p>
+                                        <p style="margin: 10px; color: grey; width: 190px;"><img src="/kcaptcha/index_kcaptcha.php" onclick="this.src = '/kcaptcha/index_kcaptcha.php?' + Math.random();"></p>
+                                        <input type="text" size="12" name="keystring" class="input_auth_header" required=" ">
+                                        <p> <input type="button" value="Войти" class="auth_submit_header" id="auth_ajax"></p>
+                                        <a href="/user/" class="link_header_auth">Регистрация / Вход</a> {% else %}
+                                        <p>
+                                            <span style="display:block; margin: 10px; width: 190px;"><i>Приветствуем Вас,<br> {{content_data.user_name}}!</i></span>
+                                            <span style="display:block; margin-bottom: 10px;"><input  type="submit" value="Выйти" name="exit" class="auth_submit_header"></span>{% endif %}
+                                        </p>
+                                    </form>-->
+                                </div>
+								
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="w3l_header_right1">
+                <h2><a href="/index/contacts/">Контакты</a></h2>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <!-- script-for sticky-nav -->
+        <script>
+            $(document).ready(function() {
+                var navoffeset = $(".agileits_header").offset().top;
+                $(window).scroll(function() {
+                    var scrollpos = $(window).scrollTop();
+                    if (scrollpos >= navoffeset) {
+                        $(".agileits_header").addClass("fixed");
+                    } else {
+                        $(".agileits_header").removeClass("fixed");
+                    }
+                });
+
+            });
+
+        </script>
+        <!-- //script-for sticky-nav -->
+        <div class="logo_products">
+            <div class="container">
+
+                <div class="w3ls_logo_products_left">
+                    <h1><a href="/"><span>Онлайн</span>Продукты</a></h1>
+                </div>
+                <div class="w3ls_logo_products_left1">
+                    <ul class="special_items">
+
+                        <li><a href="/index/about/">О нас</a><i>/</i></li>
+                        <li><a href="/categories/special/">Акция</a><i>/</i></li>
+                        <li><a href="/index/service/">Сервис</a><i>/</i></li>
+                        <li><a href="/index/contacts/">Контакты</a></li>
+
+                        {% if content_data.id_user == 4 %}
+
+                        <li><i>/</i> <a href="/order/">Заказы</a></li>
+                        <li><i>/</i> <a href="/admin/">Администрирование</a></li>
+
+                        {% else %}
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="w3ls_logo_products_left1">
+                    <ul class="phone_email">
+                        <li><i class="fa fa-phone" aria-hidden="true"></i>(+0123) 234 567</li>
+                        <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:store@grocery.com">store@grocery.com</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <!-- //header -->
+    </div>

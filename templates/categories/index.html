@@ -1,17 +1,127 @@
 {% include 'header.html' %}
-<div id="catalog-data">
-    <ul>
-        {% for subcategory in content_data.subcategories %}
-        <li><a href="/public/categories/{{ subcategory.id_category }}/">{{ subcategory.name }}</a></li>
-        {% endfor %}
-    </ul>
+<div id="cart_ajax"></div>
+<div class="products-breadcrumb" id="bread-crumbs">
+    <div class="container">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Главная</a><span>|</span></li>
+            {% for good_cat in content_data.goods_cat %}
+            <li>Каталог</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="banner">
+    <div class="w3l_banner_nav_left">
+        <nav class="navbar nav_bottom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav nav_1">
+                    {% for subcategory in content_data.subcategories %}
+
+                    <li><a class="category" href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div id="goods-data" style="margin-top: 0; padding-top: 0;">
+        {% for good_cat in content_data.goods_cat %}
+
+        <div class="w3l_banner_nav_right">
+            <div class="w3l_banner_nav_right_banner8" style="background: url(/images/{{ good_cat.banner }}) no-repeat 0px 0px;
+			-webkit-background-size:cover;
+	        -moz-background-size:cover;
+	        -o-background-size:cover;
+	        -ms-background-size:cover;">
+                <h3>Скидки на Новинки<span class="blink_me"></span></h3>
+            </div>
+            <div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_sub">
+
+                <h3 class="w3l_fruit">{{ good_cat.title }}</h3>
+
+
+                {% if content_data.is_admin == true %}
+
+                <h2 class="admin_title">Изменить / Удалить категорию</h2>
+                <form method="post" action="" enctype="multipart/form-data">
+                    <table style="max-width:300px;" class="admin_title">
+
+                        <tr>
+                            <th>Изменить баннер</th>
+                            <td><input type="file" name="upload_banner_adm"></td>
+                        </tr>
+                        <tr>
+                            <th>Название</th>
+                            <td><input type="text" name="title_adm" value="{{good_cat.title}}" required></td>
+                        </tr>
+                        <tr>
+                            <th>Статус категории (1-активна, 0-неактивна)</th>
+                            <td><input type="number" max="1" min="0" name="status_adm" value="{{good_cat.status}}" size="3" required></td>
+                        </tr>
+                        <tr>
+                            <td><input type="hidden" name="id_category_adm" value="{{good_cat.id_category}}">
+
+                                <td><input type="submit" name="change_category" value="Изменить">
+                                    <input type="submit" name="delete_category" value="Удалить"></td>
+                        </tr>
+                        {{ content_data.upload_status }}
+                    </table>
+
+                </form>
+
+                {% else %} {% endif %} {% endfor %}
+
+                <div class="fw">
+                    {% for good in content_data.goods %}
+
+                    <div class="col-md-3 w3ls_w3l_banner_left">
+                        <div class="hover14 column">
+                            <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+                                <div class="agile_top_brand_left_grid_pos">
+                                    {% if good.special == 1 %}
+                                    <img src="/images/offer.png" alt=" " class="img-responsive" /> {% else %} {% endif %}
+                                </div>
+                                <div class="agile_top_brand_left_grid1">
+                                    <figure>
+                                        <div class="snipcart-item block">
+                                            <div class="snipcart-thumb">
+                                                <a href="/good/{{ good.id_good }}/"><img src="/images/{{ good.id_category }}/small/{{ good.image }}" alt=" " class="img-responsive" /></a>
+                                                <p><a href="/good/{{ good.id_good }}/">{{ good.name }}</a></p>
+                                                <h4>{{ good.price }}&#8381; {% if good.special == 1 %}
+                                                    <span>{{ good.old_price }}&#8381;</span> {% else %} {% endif %}
+                                                </h4>
+                                            </div>
+                                            <div class="snipcart-details">
+
+                                                <button class="button_ajax" name="id_good" value="{{ good.id_good }}">В корзину</button>
+
+                                            </div>
+                                        </div>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="w3ls_w3l_banner_nav_right_grid1 w3ls_w3l_banner_nav_right_grid1_veg">
+
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
 
-<div id="goods-data">
-    <ul>
-        {% for good in content_data.goods %}
-        <li><a href="/public/good/{{ good.id_good }}/">{{ good.name }}</a></li>
-        {% endfor %}
-    </ul>
-</div>
 {% include 'footer.html' %}

@@ -1,14 +1,103 @@
-{% include 'header.html' %}
-<h1>Control</h1>
-<ul>
-    {% for data in controls.k  %}
-    <li><a href="/public/admin/control/{$k}/">{$control}</a></li>
-    {% endfor %}
-</ul>
+{% include 'header.html' %} {% if content_data.is_admin %}
 
+<div style="margin-left: 10%;">
+    {% if content_data.status=="Ошибка. Попробуйте еще раз" %}
+    <div class="admim_msg_error"><b>{{content_data.status}}</b></div>
+    {% elseif content_data.status %}
+    <div class="admin_msg"><b>{{content_data.status}}</b></div>
+    {% else %} {% endif %}
+    <div>
+        <h4 class="admin_title">Удалить пользователей, неподтвердивших регистрацию в течение 4-х недель</h4>
+        <form action="" method="post">
+            <input type="submit" name="del_not_active" value="Удалить">
+        </form>
+    </div>
+    <div>
+        <h4 class="admin_title">Изменить email администратора</h4>
+        <form action="" method="post">
 
-{% include 'footer.html' %}
+            <input type="email" name="admin_email">
+            <input type="submit" name="change_email" value="Изменить">
 
+        </form>
 
+    </div>
 
+    <div>
+        <h2 class="admin_title">Добавить категорию товара</h2>
+        <div>{{content_data.error_category}}</div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <table style="max-width:300px;">
+                <tr>
+                    <th>Баннер для категории</th>
+                    <td><input type="file" name="upload_banner_adm" required></td>
+                </tr>
+                <tr>
+                    <th>Название</th>
+                    <td><input type="text" name="title_adm" required></td>
+                </tr>
+                <tr>
+                    <th>Статус категории (1-активна, 0-неактивна)</th>
+                    <td><input type="number" min="0" max="1" name="status_adm" size="3" required></td>
+                </tr>
+            </table>
 
+            <input type="submit" name="create_category" value="Создать">
+
+        </form>
+    </div>
+
+    <div>
+        <h2 class="admin_title">Добавить новый товар</h2>
+        <div>{{content_data.error_good}}</div>
+        <form enctype="multipart/form-data" action="" method="post">
+            <table style="max-width:300px;" class="admin_title">
+                <tr>
+                    <th>Изображение</th>
+                    <td><input type="file" name="upload_image_adm" required></td>
+                </tr>
+                <tr>
+                    <th>Название</th>
+                    <td><input type="text" name="name_adm" required></td>
+                </tr>
+
+                <tr>
+                    <th>Цена</th>
+                    <td><input type="text" name="price_adm" size="5" required></td>
+                </tr>
+                <tr>
+                    <th>Прежняя цена</th>
+                    <td><input type="text" name="old_price_adm" size="5" required></td>
+                </tr>
+                <tr>
+                    <th>Категория</th>
+                    <td><select name="title_adm" required>
+                            {% for subcategory in content_data.subcategories %}
+                            <option value="{{subcategory.id_category}}">{{subcategory.title}}</option>
+                            {% endfor %}
+                        </select></td>
+                </tr>
+                <tr>
+                    <th>Статус товара (1-активен, 2-неактивен)</th>
+                    <td><input type="number" min="0" max="1" name="status_adm" size="3" required></td>
+                </tr>
+                <tr>
+                    <th>Специальное предложение (1-да, 0-нет)</th>
+                    <td><input type="number " min="0 " max="1 " name="special_adm " size="3" required></td>
+                </tr>
+                <tr>
+                    <th>Описание</th>
+                    <td><textarea name="description_adm " rows="5 " cols="25 " required>{{good.description}}</textarea></td>
+                </tr>
+
+            </table>
+
+            <input type="submit " name="create_good " value="Добавить " class="button_change_good " style="display:block; margin: 15px; " />
+
+        </form>
+
+    </div>
+</div>
+{% else %}
+<h2>{{content_data.restrict}}</h2>
+{% endif %} {% include 'footer.html' %}
