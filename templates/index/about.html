@@ -1,0 +1,142 @@
+{% include 'header.html' %}
+<div class="products-breadcrumb">
+    <div class="container">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Главная</a><span>|</span></li>
+            <li>О нас</li>
+        </ul>
+    </div>
+</div>
+<div class="banner">
+    <div class="w3l_banner_nav_left">
+        <nav class="navbar nav_bottom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav nav_1">
+                    {% for subcategory in content_data.subcategories %}
+                    <li><a href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+        </div>
+        <div id="goods-data"></div>
+        <!--{{ content_data.msg_auth_success }}-->
+        <div class="w3l_banner_nav_right">
+            <!-- about -->
+            <div class="privacy about">
+                <h3>О нас</h3>
+                <p class="animi">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+                <div class="agile_about_grids">
+                    <div class="col-md-6 agile_about_grid_right">
+                        <img src="/images/31.jpg" alt=" " class="img-responsive" />
+                    </div>
+                    <div class="col-md-6 agile_about_grid_left">
+                        <ol>
+                            <li>laborum et dolorum fuga</li>
+                            <li>corrupti quos dolores et quas</li>
+                            <li>est et expedita distinctio</li>
+                            <li>deleniti atque corrupti quos</li>
+                            <li>excepturi sint occaecati cupiditate</li>
+                            <li>accusamus et iusto odio</li>
+                        </ol>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            <!-- //about -->
+
+            <!-- //flexSlider -->
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- team -->
+    <div class="team">
+        <div class="container">
+            <h3>Наша команда</h3>
+            <div class="agileits_team_grids">
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="/images/32.jpg" alt=" " class="img-responsive" />
+                    <h4>Martin Paul</h4>
+                    <p>Мэнеджер</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="/images/33.jpg" alt=" " class="img-responsive" />
+                    <h4>Michael Rick</h4>
+                    <p>Супервизор</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="/images/34.jpg" alt=" " class="img-responsive" />
+                    <h4>Thomas Carl</h4>
+                    <p>Супервизор</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 agileits_team_grid">
+                    <img src="/images/35.jpg" alt=" " class="img-responsive" />
+                    <h4>Laura Lee</h4>
+                    <p>СЕО-специалист</p>
+                    <ul class="agileits_social_icons agileits_social_icons_team">
+                        <li><a href="#" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="google"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <!-- //team -->
+    <!-- newsletter -->
+    <div class="newsletter">
+        <div class="container">
+            <div class="w3agile_newsletter_left">
+                <h3>подписаться на прайс-рассылку</h3>
+                {% if content_data.is_email==true %}
+                <h4>{{content_data.status_subscribe}}</h4>
+                {% else %} {% endif %}
+            </div>
+            <div class="w3agile_newsletter_right">
+                <form action="" method="post">
+                    <p><input type="email" name="email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required=""></p>
+                    <p><input type="button" name="subscribe_captcha" value="Подписаться!" onclick="$('#subscribe_captcha').css('display', 'block' ); $(this).css('display', 'none');">
+                        <p>
+
+                            <div id="subscribe_captcha" style="display: none;">
+
+                                <p style="margin-bottom: 15px;"><img src="/kcaptcha/index_kcaptcha.php" onclick="this.src = '/kcaptcha/index_kcaptcha.php?' + Math.random();"></p>
+                                <input type="text" name="keystring_subscribe" value="Введите символы с картинки" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Введите символы с картинки';}" required=" ">
+                                <input type="submit" name="subscribe" value="Подписаться!">
+
+                            </div>
+
+                </form>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!-- //newsletter -->
+
+    {% include 'footer.html' %}

@@ -1,0 +1,53 @@
+<form action="" method="post" id="auth_form_ajax_2">
+    {% if content_data.user_name == null %}
+    <input type="text" name="login_user" placeholder="логин" size="12" class="input_auth_header" required=" ">
+    <input type="password" name="pass" placeholder="пароль" size="12" class="input_auth_header" required=" ">
+    <p class="header_auth_p_captcha" >Введите символы с картинки:</p>
+    <p class="header_auth_img_captcha"  id="captcha_p" ><img id="captcha_img" src="/kcaptcha/index_kcaptcha.php" onclick="this.src = '/kcaptcha/index_kcaptcha.php?' + Math.random();"> </p>
+    <input type="text" size="12" name="keystring" class="input_auth_header" required=" ">
+    <p> <input type="button" value="Войти" class="auth_submit_header" id="auth_ajax_2"></p>
+    {% if content_data.auth_status_error %}
+    <div class="header_auth_sp_text">{{content_data.auth_status}}</div>
+    {% else %} {% endif %}
+    <a href="/user/" class="link_header_auth">Регистрация / Вход</a> {% else %}
+    <p>
+        <span class="header_auth_sp_text"><i>Приветствуем Вас,<br> {{content_data.user_name}}!</i></span>
+        <span class="header_auth_sp_sub"><input type="button" value="Выйти" id="exit_ajax" name="exit" class="auth_submit_header"></span>{% endif %}
+    </p>
+</form>
+
+<script>
+    $("#auth_ajax_2").on('click', function() {
+        var data_auth = $('#auth_form_ajax_2').serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/user/ajaxAuth/",
+            cache: false,
+            data: data_auth,
+            success: function(add) {
+                $('#auth_menu').html(add);
+
+            }
+        });
+	});
+		
+		$("#exit_ajax").on('click', function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/user/ajaxAuth/",
+                    cache: false,
+                    data: { "exit": "exit" },
+                    success: function(add) {
+                        $('#auth_menu').html(add);
+                    }
+                });
+            });
+
+        $(document).ajaxComplete(function() {
+
+            $("#captcha_img").attr("src", '/kcaptcha/index_kcaptcha.php?' + Math.random());
+
+        });
+    
+</script>

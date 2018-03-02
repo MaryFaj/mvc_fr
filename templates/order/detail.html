@@ -1,0 +1,24 @@
+{% include 'header.html' %}
+<div style="margin-left: 5%;">
+    
+	
+        {% if content_data.id_user == 4 %}
+        <table class="orders_table" slyle="margin: 35px">
+  <tr><th>ID</th><th>Наименование</th><th>Количество</th></tr>
+  {% for order in content_data.order %}
+  <tr>
+   <td>{{ order.id_good }}</td>
+    <td>{{ order.name }}</td>
+       <td>{{ order.is_in_order }}</td>              
+        </tr>
+  {% endfor %}
+</table>
+
+  {% else %}
+  {{content_data.message}}
+  {% endif %}
+  
+</div>
+
+
+{% include 'footer.html' %}

@@ -1,0 +1,103 @@
+<script>
+    $(".button_ajax").on('click', function() {
+        //event.preventDefault();
+        var add = $(this).attr("value");
+        //add_id = add.slice(24, -1);
+
+        console.log(add);
+
+        $.ajax({
+            type: "POST",
+            url: "/cart/ajax_cart/",
+            cache: false,
+            //dataType: 'json',
+            data: {
+                "id_good": add
+            },
+            success: function(add) {
+                $('#cart_header').html(add);
+            }
+        });
+    });
+
+</script>
+
+{% for good_cat in content_data.goods_cat %}
+
+<div class="w3l_banner_nav_right">
+    <div class="w3l_banner_nav_right_banner8" style="background: url(/images/{{ good_cat.banner }}) no-repeat 0px 0px; background-size:cover;
+	        -webkit-background-size:cover;
+	        -moz-background-size:cover;
+	        -o-background-size:cover;
+	        -ms-background-size:cover;">
+        <h3>Скидки на новинки!<span class="blink_me"></span></h3>
+    </div>
+    <div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_sub">
+
+        <h3 class="w3l_fruit">{{ good_cat.title }}</h3>
+
+        {% if content_data.is_admin == true %}
+
+        <h2 class="admin_title">Изменить / Удалить категорию</h2>
+        <form method="post" action="" enctype="multipart/form-data">
+            <table style="max-width:300px;" class="admin_title">
+                <tr>
+                    <th>Изменить баннер</th>
+                    <td><input type="file" name="upload_banner_adm"></td>
+                </tr>
+                <tr>
+                    <th>Название</th>
+                    <td><input type="text" name="title_adm" value="{{good_cat.title}}" required></td>
+                </tr>
+                <tr>
+                    <th>Статус категории (1-активна, 0-неактивна)</th>
+                    <td><input type="number" min="0" max="1" name="status_adm" value="{{good_cat.status}}" size="3" required></td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" name="id_category_adm" value="{{good_cat.id_category}}">
+
+                        <td><input type="submit" name="change_category" value="Изменить">
+                            <input type="submit" name="delete_category" value="Удалить"></td>
+                </tr>
+                {{ content_data.upload_status }}
+
+            </table>
+
+        </form>
+
+        {% else %} {% endif %} {% endfor %}
+        <div class="fw">
+            {% for good in content_data.goods %}
+
+            <div class="col-md-3 w3ls_w3l_banner_left">
+                <div class="hover14 column">
+                    <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+                        <div class="agile_top_brand_left_grid_pos">
+                            {% if good.special == 1 %}
+                            <img src="/images/offer.png" alt=" " class="img-responsive" /> {% else %} {% endif %}
+                        </div>
+                        <div class="agile_top_brand_left_grid1">
+                            <figure>
+                                <div class="snipcart-item block">
+                                    <div class="snipcart-thumb">
+                                        <a href="/good/{{ good.id_good }}/"><img src="/images/{{ good.id_category }}/small/{{ good.image }}" alt=" " class="img-responsive" /></a>
+                                        <p><a href="/good/{{ good.id_good }}/">{{ good.name }}</a></p>
+                                        <h4>{{ good.price }}&#8381; {% if good.special == 1 %}
+                                            <span>{{ good.old_price }}&#8381;</span> {% else %} {% endif %}
+                                        </h4>
+                                    </div>
+                                    <div class="snipcart-details">
+                                        <button class="button_ajax" name="id_good" value="{{ good.id_good }}">В корзину</button>
+                                    </div>
+                                </div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {% endfor %}
+        </div>
+        <div class="clearfix"> </div>
+    </div>

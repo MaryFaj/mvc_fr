@@ -1,0 +1,92 @@
+{% include 'header.html' %}
+<div class="products-breadcrumb">
+    <div class="container">
+        <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">Главная</a><span>|</span></li>
+
+            <li>Выгодное предложение !</li>
+
+        </ul>
+    </div>
+</div>
+<div class="banner">
+    <div class="w3l_banner_nav_left">
+        <nav class="navbar nav_bottom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav nav_1">
+
+                    {% for subcategory in content_data.subcategories %}
+
+                    <li><a class="category_special" href="/categories/{{ subcategory.id_category }}/">{{ subcategory.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+    </div>
+
+    <div class="w3l_banner_nav_right">
+        <div class="w3l_banner_nav_right_banner8" style="background: url(/images/12.jpg) no-repeat 0px 0px; background-size:cover;
+	        -webkit-background-size:cover;
+	        -moz-background-size:cover;
+	        -o-background-size:cover;
+	        -ms-background-size:cover;">
+            <h3>Скидки на новинки!<span class="blink_me"></span></h3>
+        </div>
+        <div class="w3ls_w3l_banner_nav_right_grid w3ls_w3l_banner_nav_right_grid_sub">
+
+            <h3 class="w3l_fruit">Выгодное предложение</h3>
+
+            <div class="fw">
+
+                {% for good_special in content_data.goods_special %}
+
+                <div class="col-md-3 w3ls_w3l_banner_left">
+                    <div class="hover14 column">
+                        <div class="agile_top_brand_left_grid w3l_agile_top_brand_left_grid">
+                            <div class="agile_top_brand_left_grid_pos">
+                                {% if good_special.special == 1 %}
+                                <img src="/images/offer.png" alt=" " class="img-responsive" /> {% else %} {% endif %}
+                            </div>
+                            <div class="agile_top_brand_left_grid1">
+                                <figure>
+                                    <div class="snipcart-item block">
+                                        <div class="snipcart-thumb">
+                                            <a href="/good/{{ good_special.id_good }}/"><img src="/images/{{ good_special.id_category }}/small/{{ good_special.image }}" alt=" " class="img-responsive" /></a>
+                                            <p>{{ good_special.name }}</p>
+                                            <h4>{{ good_special.price }}&#8381; {% if good_special.special == 1 %}
+                                                <span>{{ good_special.old_price }}&#8381;</span> {% else %} {% endif %}
+                                            </h4>
+                                        </div>
+                                        <div class="snipcart-details">
+
+                                            <button class="button_ajax" name="id_good" value="{{ good_special.id_good }}">В корзину!</button>
+
+                                        </div>
+                                    </div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="clearfix"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"> </div>
+{% include 'footer.html' %}

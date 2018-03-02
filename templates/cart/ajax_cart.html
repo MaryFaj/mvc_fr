@@ -1,0 +1,60 @@
+<script>
+    function update_ajax() {
+
+        $('.cart_table input').on('click', function() {
+            var update_this = $('#form_cart_ajax').serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/cart/ajax_cart/",
+                cache: false,
+                data: update_this,
+                success: function(add) {
+                    $('#cart_header').html(add);
+                }
+            });
+        });
+    };
+
+</script>
+
+{% if content_data.cart_goods == 0 %}
+<div class="cart_header_msg">
+    <h3>Ваша корзина пуста!</h3>
+</div>
+
+{% else %}
+
+<div class="container_table_cart">
+    <form action="" method="post" id="form_cart_ajax">
+        <table class="cart_table">
+            {% for cart_good in content_data.cart_goods %}
+            <tr>
+                <td>{{cart_good.name}}</td>
+                <td><input style="display: block; width: 50px;" type="number" min="0" max="100" size="2" name="quantity[{{cart_good.id_good}}]" value="{{cart_good.q}}" id="quantity_this">
+                    <input type="hidden" size="2" name="id[]" value="{{cart_good.id_good}}" id="id_this"></td>
+                <td>{{cart_good.price}} &#8381;</td> {% if content_data.view_coast == true %}
+                <td>{{cart_good.res}} &#8381;</td>
+                {% else %} {% endif %} {% endfor %}
+            </tr>
+            {% if content_data.view_coast == true %}
+            <tr>
+                <td colspan="3"></td>
+                <td style="text-align:center"><b>ИТОГО:</b> {{content_data.sum}} &#8381;</td>
+            </tr>
+            {% else %} {% endif %}
+
+        </table>
+
+    </form>
+</div>
+<div>
+    <a class="link_header_cart" href="/cart/">Перейти к заказу</a>
+</div>
+
+{% endif %}
+
+<script>
+    update_ajax();
+
+</script>
